@@ -44,9 +44,11 @@ step by hand, add or update a script for it in the same change.
 | Script | Purpose |
 |---|---|
 | `scripts/setup-build-image.sh` | Builds the Docker image from `docker/Dockerfile` |
-| `scripts/bootstrap-gradle-wrapper.sh [ver]` | Generates the Gradle wrapper inside the container, pinning the checksum |
+| `scripts/fetch-gradle.sh [ver]` | Downloads the Gradle zip **on the host** (resumable, sha256-verified) into `.cache/gradle-dist/` (git-ignored) |
+| `scripts/bootstrap-gradle-wrapper.sh [ver]` | Generates the Gradle wrapper inside the container from that local zip, pinning the checksum |
 | `scripts/lib/common.sh` | Shared settings and helpers (sourced, never executed) |
-| `scripts/container/run-gradle.sh` | Runs inside the container; applies memory options and the aarch64 `aapt2` override |
+| `scripts/container/run-gradle.sh` | Runs inside the container; seeds the wrapper cache from `/gradle-dist`, applies memory options and the aarch64 `aapt2` override |
+| `scripts/container/GradleWrapperHash.java` | Computes the wrapper's cache directory hash so the pre-seeded Gradle is found |
 | `scripts/build-debug.sh`, `test-unit.sh`, `lint.sh` | Planned (Phase 1): Docker-based checks |
 | `scripts/test-connected.sh`, `install-debug.sh` | Planned (Phase 1): use host `adb`; must print NOT RUN when no device is attached |
 
@@ -62,6 +64,13 @@ overridable through environment variables, clear failure messages, executable bi
   `run-gradle.sh` passes `-Pandroid.aapt2FromMavenOverride=...` on aarch64. Expect slow resource
   steps. If an `aapt2` error appears, check this first.
 - Gradle cache lives in the named volume `android-webui-gradle-cache`.
+- **Gradle is downloaded on the host, never inside the container.** Downloads inside Docker were
+  extremely slow and hung. `./scripts/fetch-gradle.sh` stores the zip in `.cache/gradle-dist/`,
+  which `run_gradle` mounts read-only at `/gradle-dist`. After changing the wrapper version, re-run
+  `fetch-gradle.sh`. The same may be needed for other large downloads (Maven dependencies come
+  through the Gradle cache volume and cache after the first build).
+- Background jobs started with a trailing `&` inside a tool call are killed when the call returns.
+  Use the tool's `background: true` option for anything long.
 - Container memory: `-m 8g`, `GRADLE_OPTS=-Xmx4g -XX:MaxMetaspaceSize=1g`, `--max-workers=2`, `--no-daemon`.
   The Docker VM has about 8 GB total, so do not raise these blindly.
 - Host `adb` is at `~/android-sdk/platform-tools/adb`. A device may or may not be attached

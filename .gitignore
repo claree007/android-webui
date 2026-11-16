@@ -33,3 +33,6 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# Local download cache for build tooling (see scripts/fetch-gradle.sh)
+.cache/

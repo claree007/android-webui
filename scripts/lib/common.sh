@@ -12,6 +12,11 @@ DOCKER_MEMORY="${DOCKER_MEMORY:-8g}"
 GRADLE_XMX="${GRADLE_XMX:-4g}"
 GRADLE_WORKERS="${GRADLE_WORKERS:-2}"
 
+# Gradle distribution is downloaded on the host (scripts/fetch-gradle.sh) and mounted
+# read-only into containers, because downloads inside Docker proved slow/unreliable.
+GRADLE_VERSION="${GRADLE_VERSION:-8.14.7}"
+GRADLE_DIST_DIR="${GRADLE_DIST_DIR:-$REPO_ROOT/.cache/gradle-dist}"
+
 APP_ID="com.androidwebui.android"
 DEBUG_APK="$REPO_ROOT/app/build/outputs/apk/debug/app-debug.apk"
 TEST_APK="$REPO_ROOT/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk"
@@ -36,6 +41,8 @@ run_gradle() {
   docker run --rm -m "$DOCKER_MEMORY" \
     -v "$REPO_ROOT:/app" \
     -v "$GRADLE_VOLUME:/root/.gradle" \
+    -v "$GRADLE_DIST_DIR:/gradle-dist:ro" \
+    -e GRADLE_VERSION="$GRADLE_VERSION" \
     -e GRADLE_XMX="$GRADLE_XMX" \
     -e GRADLE_WORKERS="$GRADLE_WORKERS" \
     "$IMAGE" bash /app/scripts/container/run-gradle.sh "$@"

@@ -1,0 +1,412 @@
+alembic b2c3d4e5f6a7
+table access_grant
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 resource_type TEXT notnull=1 default=None pk=0
+  col 2 resource_id TEXT notnull=1 default=None pk=0
+  col 3 principal_type TEXT notnull=1 default=None pk=0
+  col 4 principal_id TEXT notnull=1 default=None pk=0
+  col 5 permission TEXT notnull=1 default=None pk=0
+  col 6 created_at BIGINT notnull=1 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+  index auto unique=1 origin=u partial=0 cols=resource_type,resource_id,principal_type,principal_id,permission
+  index idx_access_grant_principal unique=0 origin=c partial=0 cols=principal_type,principal_id
+  index idx_access_grant_resource unique=0 origin=c partial=0 cols=resource_type,resource_id
+table alembic_version
+  col 0 version_num VARCHAR(32) notnull=1 default=None pk=1
+  index auto unique=1 origin=pk partial=0 cols=version_num
+table api_key
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 user_id TEXT notnull=0 default=None pk=0
+  col 2 key TEXT notnull=1 default=None pk=0
+  col 3 data JSON notnull=0 default=None pk=0
+  col 4 expires_at BIGINT notnull=0 default=None pk=0
+  col 5 last_used_at BIGINT notnull=0 default=None pk=0
+  col 6 created_at BIGINT notnull=1 default=None pk=0
+  col 7 updated_at BIGINT notnull=1 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+  index auto unique=1 origin=u partial=0 cols=key
+table auth
+  col 0 id VARCHAR(255) notnull=1 default=None pk=0
+  col 1 email VARCHAR(255) notnull=1 default=None pk=0
+  col 2 password TEXT notnull=1 default=None pk=0
+  col 3 active INTEGER notnull=1 default=None pk=0
+  index auth_id unique=1 origin=c partial=0 cols=id
+table channel
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 user_id TEXT notnull=0 default=None pk=0
+  col 2 name TEXT notnull=0 default=None pk=0
+  col 3 description TEXT notnull=0 default=None pk=0
+  col 4 data JSON notnull=0 default=None pk=0
+  col 5 meta JSON notnull=0 default=None pk=0
+  col 6 created_at BIGINT notnull=0 default=None pk=0
+  col 7 updated_at BIGINT notnull=0 default=None pk=0
+  col 8 type TEXT notnull=0 default=None pk=0
+  col 9 is_private BOOLEAN notnull=0 default=None pk=0
+  col 10 archived_at BIGINT notnull=0 default=None pk=0
+  col 11 archived_by TEXT notnull=0 default=None pk=0
+  col 12 deleted_at BIGINT notnull=0 default=None pk=0
+  col 13 deleted_by TEXT notnull=0 default=None pk=0
+  col 14 updated_by TEXT notnull=0 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+table channel_file
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 user_id TEXT notnull=1 default=None pk=0
+  col 2 channel_id TEXT notnull=1 default=None pk=0
+  col 3 file_id TEXT notnull=1 default=None pk=0
+  col 4 created_at BIGINT notnull=1 default=None pk=0
+  col 5 updated_at BIGINT notnull=1 default=None pk=0
+  col 6 message_id TEXT notnull=0 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+  index auto unique=1 origin=u partial=0 cols=channel_id,file_id
+  index ix_channel_file_channel_id unique=0 origin=c partial=0 cols=channel_id
+  index ix_channel_file_file_id unique=0 origin=c partial=0 cols=file_id
+  index ix_channel_file_user_id unique=0 origin=c partial=0 cols=user_id
+table channel_member
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 channel_id TEXT notnull=1 default=None pk=0
+  col 2 user_id TEXT notnull=1 default=None pk=0
+  col 3 created_at BIGINT notnull=0 default=None pk=0
+  col 4 status TEXT notnull=0 default=None pk=0
+  col 5 is_active BOOLEAN notnull=1 default=1 pk=0
+  col 6 is_channel_muted BOOLEAN notnull=1 default=0 pk=0
+  col 7 is_channel_pinned BOOLEAN notnull=1 default=0 pk=0
+  col 8 data JSON notnull=0 default=None pk=0
+  col 9 meta JSON notnull=0 default=None pk=0
+  col 10 joined_at BIGINT notnull=1 default=None pk=0
+  col 11 left_at BIGINT notnull=0 default=None pk=0
+  col 12 last_read_at BIGINT notnull=0 default=None pk=0
+  col 13 updated_at BIGINT notnull=0 default=None pk=0
+  col 14 role TEXT notnull=0 default=None pk=0
+  col 15 invited_by TEXT notnull=0 default=None pk=0
+  col 16 invited_at BIGINT notnull=0 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+table channel_webhook
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 user_id TEXT notnull=1 default=None pk=0
+  col 2 channel_id TEXT notnull=1 default=None pk=0
+  col 3 name TEXT notnull=1 default=None pk=0
+  col 4 profile_image_url TEXT notnull=0 default=None pk=0
+  col 5 token TEXT notnull=1 default=None pk=0
+  col 6 last_used_at BIGINT notnull=0 default=None pk=0
+  col 7 created_at BIGINT notnull=1 default=None pk=0
+  col 8 updated_at BIGINT notnull=1 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+table chat
+  col 0 id VARCHAR(255) notnull=1 default=None pk=0
+  col 1 user_id VARCHAR(255) notnull=1 default=None pk=0
+  col 2 title TEXT notnull=1 default=None pk=0
+  col 3 share_id VARCHAR(255) notnull=0 default=None pk=0
+  col 4 archived INTEGER notnull=1 default=None pk=0
+  col 5 created_at DATETIME notnull=1 default=None pk=0
+  col 6 updated_at DATETIME notnull=1 default=None pk=0
+  col 7 chat JSON notnull=0 default=None pk=0
+  col 8 pinned BOOLEAN notnull=0 default=None pk=0
+  col 9 meta JSON notnull=1 default='{}' pk=0
+  col 10 folder_id TEXT notnull=0 default=None pk=0
+  index chat_id unique=1 origin=c partial=0 cols=id
+  index chat_share_id unique=1 origin=c partial=0 cols=share_id
+  index folder_id_idx unique=0 origin=c partial=0 cols=folder_id
+  index folder_id_user_id_idx unique=0 origin=c partial=0 cols=folder_id,user_id
+  index updated_at_user_id_idx unique=0 origin=c partial=0 cols=updated_at,user_id
+  index user_id_archived_idx unique=0 origin=c partial=0 cols=user_id,archived
+  index user_id_pinned_idx unique=0 origin=c partial=0 cols=user_id,pinned
+table chat_file
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 user_id TEXT notnull=1 default=None pk=0
+  col 2 chat_id TEXT notnull=1 default=None pk=0
+  col 3 file_id TEXT notnull=1 default=None pk=0
+  col 4 message_id TEXT notnull=0 default=None pk=0
+  col 5 created_at BIGINT notnull=1 default=None pk=0
+  col 6 updated_at BIGINT notnull=1 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+  index auto unique=1 origin=u partial=0 cols=chat_id,file_id
+  index ix_chat_file_chat_id unique=0 origin=c partial=0 cols=chat_id
+  index ix_chat_file_file_id unique=0 origin=c partial=0 cols=file_id
+  index ix_chat_file_message_id unique=0 origin=c partial=0 cols=message_id
+  index ix_chat_file_user_id unique=0 origin=c partial=0 cols=user_id
+table chat_message
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 chat_id TEXT notnull=1 default=None pk=0
+  col 2 user_id TEXT notnull=0 default=None pk=0
+  col 3 role TEXT notnull=1 default=None pk=0
+  col 4 parent_id TEXT notnull=0 default=None pk=0
+  col 5 content JSON notnull=0 default=None pk=0
+  col 6 output JSON notnull=0 default=None pk=0
+  col 7 model_id TEXT notnull=0 default=None pk=0
+  col 8 files JSON notnull=0 default=None pk=0
+  col 9 sources JSON notnull=0 default=None pk=0
+  col 10 embeds JSON notnull=0 default=None pk=0
+  col 11 done BOOLEAN notnull=0 default=None pk=0
+  col 12 status_history JSON notnull=0 default=None pk=0
+  col 13 error JSON notnull=0 default=None pk=0
+  col 14 usage JSON notnull=0 default=None pk=0
+  col 15 created_at BIGINT notnull=0 default=None pk=0
+  col 16 updated_at BIGINT notnull=0 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+  index chat_message_chat_parent_idx unique=0 origin=c partial=0 cols=chat_id,parent_id
+  index chat_message_model_created_idx unique=0 origin=c partial=0 cols=model_id,created_at
+  index chat_message_user_created_idx unique=0 origin=c partial=0 cols=user_id,created_at
+  index ix_chat_message_chat_id unique=0 origin=c partial=0 cols=chat_id
+  index ix_chat_message_created_at unique=0 origin=c partial=0 cols=created_at
+  index ix_chat_message_model_id unique=0 origin=c partial=0 cols=model_id
+  index ix_chat_message_user_id unique=0 origin=c partial=0 cols=user_id
+table chatidtag
+  col 0 id VARCHAR(255) notnull=1 default=None pk=0
+  col 1 tag_name VARCHAR(255) notnull=1 default=None pk=0
+  col 2 chat_id VARCHAR(255) notnull=1 default=None pk=0
+  col 3 user_id VARCHAR(255) notnull=1 default=None pk=0
+  col 4 timestamp INTEGER notnull=1 default=None pk=0
+  index chatidtag_id unique=1 origin=c partial=0 cols=id
+table config
+  col 0 id INTEGER notnull=1 default=None pk=1
+  col 1 data JSON notnull=1 default=None pk=0
+  col 2 version INTEGER notnull=1 default=None pk=0
+  col 3 created_at DATETIME notnull=1 default=CURRENT_TIMESTAMP pk=0
+  col 4 updated_at DATETIME notnull=0 default=CURRENT_TIMESTAMP pk=0
+table document
+  col 0 id INTEGER notnull=1 default=None pk=1
+  col 1 collection_name VARCHAR(255) notnull=1 default=None pk=0
+  col 2 name VARCHAR(255) notnull=1 default=None pk=0
+  col 3 title TEXT notnull=1 default=None pk=0
+  col 4 filename TEXT notnull=1 default=None pk=0
+  col 5 content TEXT notnull=0 default=None pk=0
+  col 6 user_id VARCHAR(255) notnull=1 default=None pk=0
+  col 7 timestamp INTEGER notnull=1 default=None pk=0
+  index document_collection_name unique=1 origin=c partial=0 cols=collection_name
+  index document_name unique=1 origin=c partial=0 cols=name
+table feedback
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 user_id TEXT notnull=0 default=None pk=0
+  col 2 version BIGINT notnull=0 default=None pk=0
+  col 3 type TEXT notnull=0 default=None pk=0
+  col 4 data JSON notnull=0 default=None pk=0
+  col 5 meta JSON notnull=0 default=None pk=0
+  col 6 snapshot JSON notnull=0 default=None pk=0
+  col 7 created_at BIGINT notnull=1 default=None pk=0
+  col 8 updated_at BIGINT notnull=1 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+table file
+  col 0 id TEXT notnull=1 default=None pk=0
+  col 1 user_id TEXT notnull=1 default=None pk=0
+  col 2 filename TEXT notnull=1 default=None pk=0
+  col 3 meta JSON notnull=0 default=None pk=0
+  col 4 created_at INTEGER notnull=1 default=None pk=0
+  col 5 hash TEXT notnull=0 default=None pk=0
+  col 6 data JSON notnull=0 default=None pk=0
+  col 7 updated_at BIGINT notnull=0 default=None pk=0
+  col 8 path TEXT notnull=0 default=None pk=0
+  index file_id unique=1 origin=c partial=0 cols=id
+table folder
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 parent_id TEXT notnull=0 default=None pk=0
+  col 2 user_id TEXT notnull=1 default=None pk=2
+  col 3 name TEXT notnull=1 default=None pk=0
+  col 4 items JSON notnull=0 default=None pk=0
+  col 5 meta JSON notnull=0 default=None pk=0
+  col 6 is_expanded BOOLEAN notnull=1 default=None pk=0
+  col 7 created_at BIGINT notnull=1 default=None pk=0
+  col 8 updated_at BIGINT notnull=1 default=None pk=0
+  col 9 data JSON notnull=0 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id,user_id
+table function
+  col 0 id TEXT notnull=1 default=None pk=0
+  col 1 user_id TEXT notnull=1 default=None pk=0
+  col 2 name TEXT notnull=1 default=None pk=0
+  col 3 type TEXT notnull=1 default=None pk=0
+  col 4 content TEXT notnull=1 default=None pk=0
+  col 5 meta TEXT notnull=1 default=None pk=0
+  col 6 created_at INTEGER notnull=1 default=None pk=0
+  col 7 updated_at INTEGER notnull=1 default=None pk=0
+  col 8 valves TEXT notnull=0 default=None pk=0
+  col 9 is_active INTEGER notnull=1 default=None pk=0
+  col 10 is_global INTEGER notnull=1 default=None pk=0
+  index function_id unique=1 origin=c partial=0 cols=id
+  index is_global_idx unique=0 origin=c partial=0 cols=is_global
+table group
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 user_id TEXT notnull=0 default=None pk=0
+  col 2 name TEXT notnull=0 default=None pk=0
+  col 3 description TEXT notnull=0 default=None pk=0
+  col 4 data JSON notnull=0 default=None pk=0
+  col 5 meta JSON notnull=0 default=None pk=0
+  col 6 permissions JSON notnull=0 default=None pk=0
+  col 7 created_at BIGINT notnull=0 default=None pk=0
+  col 8 updated_at BIGINT notnull=0 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+table group_member
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 group_id TEXT notnull=1 default=None pk=0
+  col 2 user_id TEXT notnull=1 default=None pk=0
+  col 3 created_at BIGINT notnull=0 default=None pk=0
+  col 4 updated_at BIGINT notnull=0 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+  index auto unique=1 origin=u partial=0 cols=group_id,user_id
+table knowledge
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 user_id TEXT notnull=1 default=None pk=0
+  col 2 name TEXT notnull=1 default=None pk=0
+  col 3 description TEXT notnull=0 default=None pk=0
+  col 4 meta JSON notnull=0 default=None pk=0
+  col 5 created_at BIGINT notnull=1 default=None pk=0
+  col 6 updated_at BIGINT notnull=0 default=None pk=0
+  col 7 data JSON notnull=0 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+table knowledge_file
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 user_id TEXT notnull=1 default=None pk=0
+  col 2 knowledge_id TEXT notnull=1 default=None pk=0
+  col 3 file_id TEXT notnull=1 default=None pk=0
+  col 4 created_at BIGINT notnull=1 default=None pk=0
+  col 5 updated_at BIGINT notnull=1 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+  index auto unique=1 origin=u partial=0 cols=knowledge_id,file_id
+  index ix_knowledge_file_file_id unique=0 origin=c partial=0 cols=file_id
+  index ix_knowledge_file_knowledge_id unique=0 origin=c partial=0 cols=knowledge_id
+  index ix_knowledge_file_user_id unique=0 origin=c partial=0 cols=user_id
+table memory
+  col 0 id VARCHAR(255) notnull=1 default=None pk=0
+  col 1 user_id VARCHAR(255) notnull=1 default=None pk=0
+  col 2 content TEXT notnull=1 default=None pk=0
+  col 3 updated_at INTEGER notnull=1 default=None pk=0
+  col 4 created_at INTEGER notnull=1 default=None pk=0
+  index memory_id unique=1 origin=c partial=0 cols=id
+table message
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 user_id TEXT notnull=0 default=None pk=0
+  col 2 channel_id TEXT notnull=0 default=None pk=0
+  col 3 content TEXT notnull=0 default=None pk=0
+  col 4 data JSON notnull=0 default=None pk=0
+  col 5 meta JSON notnull=0 default=None pk=0
+  col 6 created_at BIGINT notnull=0 default=None pk=0
+  col 7 updated_at BIGINT notnull=0 default=None pk=0
+  col 8 parent_id TEXT notnull=0 default=None pk=0
+  col 9 reply_to_id TEXT notnull=0 default=None pk=0
+  col 10 is_pinned BOOLEAN notnull=1 default=0 pk=0
+  col 11 pinned_at BIGINT notnull=0 default=None pk=0
+  col 12 pinned_by TEXT notnull=0 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+table message_reaction
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 user_id TEXT notnull=1 default=None pk=0
+  col 2 message_id TEXT notnull=1 default=None pk=0
+  col 3 name TEXT notnull=1 default=None pk=0
+  col 4 created_at BIGINT notnull=0 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+table migratehistory
+  col 0 id INTEGER notnull=1 default=None pk=1
+  col 1 name VARCHAR(255) notnull=1 default=None pk=0
+  col 2 migrated_at DATETIME notnull=1 default=None pk=0
+table model
+  col 0 id TEXT notnull=1 default=None pk=0
+  col 1 user_id TEXT notnull=1 default=None pk=0
+  col 2 base_model_id TEXT notnull=0 default=None pk=0
+  col 3 name TEXT notnull=1 default=None pk=0
+  col 4 meta TEXT notnull=1 default=None pk=0
+  col 5 params TEXT notnull=1 default=None pk=0
+  col 6 created_at INTEGER notnull=1 default=None pk=0
+  col 7 updated_at INTEGER notnull=1 default=None pk=0
+  col 8 is_active BOOLEAN notnull=1 default=1 pk=0
+  index model_id unique=1 origin=c partial=0 cols=id
+table note
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 user_id TEXT notnull=0 default=None pk=0
+  col 2 title TEXT notnull=0 default=None pk=0
+  col 3 data JSON notnull=0 default=None pk=0
+  col 4 meta JSON notnull=0 default=None pk=0
+  col 5 created_at BIGINT notnull=0 default=None pk=0
+  col 6 updated_at BIGINT notnull=0 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+table oauth_session
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 user_id TEXT notnull=1 default=None pk=0
+  col 2 provider TEXT notnull=1 default=None pk=0
+  col 3 token TEXT notnull=1 default=None pk=0
+  col 4 expires_at BIGINT notnull=1 default=None pk=0
+  col 5 created_at BIGINT notnull=1 default=None pk=0
+  col 6 updated_at BIGINT notnull=1 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+  index idx_oauth_session_expires_at unique=0 origin=c partial=0 cols=expires_at
+  index idx_oauth_session_user_id unique=0 origin=c partial=0 cols=user_id
+  index idx_oauth_session_user_provider unique=0 origin=c partial=0 cols=user_id,provider
+table prompt
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 command VARCHAR notnull=0 default=None pk=0
+  col 2 user_id VARCHAR notnull=1 default=None pk=0
+  col 3 name TEXT notnull=1 default=None pk=0
+  col 4 content TEXT notnull=1 default=None pk=0
+  col 5 data JSON notnull=0 default=None pk=0
+  col 6 meta JSON notnull=0 default=None pk=0
+  col 7 is_active BOOLEAN notnull=1 default='1' pk=0
+  col 8 version_id TEXT notnull=0 default=None pk=0
+  col 9 tags JSON notnull=0 default=None pk=0
+  col 10 created_at BIGINT notnull=1 default=None pk=0
+  col 11 updated_at BIGINT notnull=1 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+  index ix_prompt_new_command unique=1 origin=c partial=0 cols=command
+table prompt_history
+  col 0 id TEXT notnull=1 default=None pk=1
+  col 1 prompt_id TEXT notnull=1 default=None pk=0
+  col 2 parent_id TEXT notnull=0 default=None pk=0
+  col 3 snapshot JSON notnull=1 default=None pk=0
+  col 4 user_id TEXT notnull=1 default=None pk=0
+  col 5 commit_message TEXT notnull=0 default=None pk=0
+  col 6 created_at BIGINT notnull=1 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+  index ix_prompt_history_prompt_id unique=0 origin=c partial=0 cols=prompt_id
+table skill
+  col 0 id VARCHAR notnull=1 default=None pk=1
+  col 1 user_id VARCHAR notnull=1 default=None pk=0
+  col 2 name TEXT notnull=1 default=None pk=0
+  col 3 description TEXT notnull=0 default=None pk=0
+  col 4 content TEXT notnull=1 default=None pk=0
+  col 5 meta JSON notnull=0 default=None pk=0
+  col 6 is_active BOOLEAN notnull=1 default=None pk=0
+  col 7 updated_at BIGINT notnull=1 default=None pk=0
+  col 8 created_at BIGINT notnull=1 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+  index auto unique=1 origin=u partial=0 cols=name
+  index idx_skill_updated_at unique=0 origin=c partial=0 cols=updated_at
+  index idx_skill_user_id unique=0 origin=c partial=0 cols=user_id
+table tag
+  col 0 id VARCHAR(255) notnull=1 default=None pk=1
+  col 1 name VARCHAR(255) notnull=1 default=None pk=0
+  col 2 user_id VARCHAR(255) notnull=1 default=None pk=2
+  col 3 meta JSON notnull=0 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id,user_id
+  index user_id_idx unique=0 origin=c partial=0 cols=user_id
+table tool
+  col 0 id TEXT notnull=1 default=None pk=0
+  col 1 user_id TEXT notnull=1 default=None pk=0
+  col 2 name TEXT notnull=1 default=None pk=0
+  col 3 content TEXT notnull=1 default=None pk=0
+  col 4 specs TEXT notnull=1 default=None pk=0
+  col 5 meta TEXT notnull=1 default=None pk=0
+  col 6 created_at INTEGER notnull=1 default=None pk=0
+  col 7 updated_at INTEGER notnull=1 default=None pk=0
+  col 8 valves TEXT notnull=0 default=None pk=0
+  index tool_id unique=1 origin=c partial=0 cols=id
+table user
+  col 0 id VARCHAR(255) notnull=1 default=None pk=1
+  col 1 name VARCHAR(255) notnull=1 default=None pk=0
+  col 2 email VARCHAR(255) notnull=1 default=None pk=0
+  col 3 role VARCHAR(255) notnull=1 default=None pk=0
+  col 4 profile_image_url TEXT notnull=1 default=None pk=0
+  col 5 created_at INTEGER notnull=1 default=None pk=0
+  col 6 updated_at INTEGER notnull=1 default=None pk=0
+  col 7 last_active_at INTEGER notnull=1 default=None pk=0
+  col 8 username VARCHAR(50) notnull=0 default=None pk=0
+  col 9 bio TEXT notnull=0 default=None pk=0
+  col 10 gender TEXT notnull=0 default=None pk=0
+  col 11 date_of_birth DATE notnull=0 default=None pk=0
+  col 12 profile_banner_image_url TEXT notnull=0 default=None pk=0
+  col 13 timezone VARCHAR notnull=0 default=None pk=0
+  col 14 presence_state VARCHAR notnull=0 default=None pk=0
+  col 15 status_emoji VARCHAR notnull=0 default=None pk=0
+  col 16 status_message TEXT notnull=0 default=None pk=0
+  col 17 status_expires_at BIGINT notnull=0 default=None pk=0
+  col 18 oauth JSON notnull=0 default=None pk=0
+  col 19 info JSON notnull=0 default=None pk=0
+  col 20 settings JSON notnull=0 default=None pk=0
+  col 21 scim JSON notnull=0 default=None pk=0
+  index auto unique=1 origin=pk partial=0 cols=id
+  index user_id unique=1 origin=c partial=0 cols=id

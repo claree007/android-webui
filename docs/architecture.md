@@ -36,6 +36,8 @@ Each dependency needs a one-line justification here before it is added.
 | `androidx.navigation:navigation-compose` | Screen navigation (plan stack) |
 | `kotlinx-coroutines-android` | Coroutines and `StateFlow` for state and background work |
 | `junit` (test) | JVM unit tests |
+| `org.robolectric:robolectric` (test) | Runs Compose UI tests on the JVM inside the Docker build, with no device or emulator |
+| `androidx.compose.ui:ui-test-junit4`, `ui-test-manifest` (test) | Compose semantics-based UI tests (`createComposeRule`) |
 | `org.xerial:sqlite-jdbc` (test) | Runs the SQLite schema and repository tests on the JVM; not shipped in the app |
 
 Excluded by the plan: Hilt, KSP, Room, DataStore (D4, D6, D7).

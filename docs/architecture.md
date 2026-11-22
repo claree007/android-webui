@@ -2,6 +2,15 @@
 
 Product scope and decisions (D1–D22) live in [`../new_implementation_plan.md`](../new_implementation_plan.md). This file records what the code currently contains.
 
+## Phase 0 documents
+
+| File | Purpose |
+|---|---|
+| `feature-parity.csv` | Inventory of single-user features with disposition, phase and status |
+| `screenshot-map.md` | Mapping of each reference screenshot to a screen and state, plus missing references |
+| `behavior-specs.md` | Behavior specs derived from the Open WebUI web app (no code copied) |
+| `provenance.md` | Pinned upstream revision, license position and a log of anything taken |
+
 ## Layout
 
 | Path | Purpose |

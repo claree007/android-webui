@@ -1,0 +1,107 @@
+id,area,feature,reference,disposition,phase,status,decision,notes
+F001,Foundation,Local profile "User" without login,auths.py users.py,adapt,1,done,D1,One `user` row created on first run
+F002,Foundation,webui.db-compatible schema,models/*.py,adapt,1,done,D1 D4,Schema asset generated from reference DB; SchemaTest compares fingerprint
+F003,Foundation,Keystore-backed API key storage,config.py openai.api_keys,adapt,1,done,D5,DB holds keystore:<id> references
+F004,Foundation,Light/dark/system theme,Settings/Interface,adapt,1,done,D7,Device-only SharedPreferences
+F005,Foundation,Docker build + CI,n/a,include,1,done,,scripts/dev
+F006,Shell,Empty / new-chat screen with suggestions,chat/Placeholder.svelte Suggestions.svelte,include,3,not started,,Screens 01
+F007,Shell,Sidebar: new chat / search / notes / workspace / folders / chats by date,layout/Sidebar.svelte,adapt,3,not started,D10,Native drawer
+F008,Shell,Sidebar Models list (pinned models),Sidebar/PinnedModelList.svelte,include,3,not started,D10,
+F009,Shell,User menu (Settings / Playground / Workspace / Notes / Memories),Sidebar/UserMenu.svelte,adapt,3,not started,D10,Sign Out / status / Admin Panel / Channels removed
+F010,Shell,Model selector sheet,chat/ModelSelector,include,3,not started,D19,Screens 32
+F011,Shell,Chat navbar menu (share / download / rename / archive / delete / controls),layout/Navbar/Menu.svelte,adapt,3,not started,,Share = Android share sheet; no public share links
+F012,Shell,Chat controls panel (system prompt + advanced params),chat/Controls Settings/Advanced,include,4,not started,,Screens 31
+F013,Shell,Settings full-height sheet with tabs,chat/SettingsModal.svelte,adapt,3,not started,D15,
+F014,Shell,Loading / error / empty / unsupported states,n/a,include,3,not started,,
+F015,Connections,OpenAI-compatible connection (url / key / prefix / tags / model allow-list / enable),admin/Settings/Connections/OpenAIConnection.svelte,include,4,not started,D16,config key openai.*
+F016,Connections,Ollama connection,admin/Settings/Connections/OllamaConnection.svelte,include,4,not started,D16,config key ollama.*
+F017,Connections,Additional provider types (Gemini / Anthropic ...),n/a (app extension),include,4,not started,D17,api_configs[i].provider_type
+F018,Connections,Connection test and model discovery,routers/openai.py ollama.py,include,4,not started,,
+F019,Connections,Manual model IDs and capability overrides,admin/Settings/Models,include,4,not started,,
+F020,Connections,Direct Connections (browser),Settings/Connections.svelte,exclude,,n/a,D16,Preserved in user.settings.directConnections
+F021,Chat,Streaming responses (SSE / NDJSON),routers/openai.py,include,4,not started,D9,
+F022,Chat,Markdown rendering while streaming,chat/Messages/Markdown,include,4,not started,D22,In-house parser
+F023,Chat,Text selection and copy,n/a,include,4,not started,D22,
+F024,Chat,Persistent chats and drafts,models/chats.py,include,4,not started,D3 D18,
+F025,Chat,Model parameters and system prompt,Settings/General.svelte,include,4,not started,,user.settings.params
+F026,Chat,Auto title generation,routers/tasks.py,include,4,not started,D13,task.* keys
+F027,Chat,Task-model setting,admin/Settings/Interface.svelte,adapt,4,not started,D13,Moved into Settings -> Interface
+F028,Chat,Auxiliary request notice,n/a (app extension),include,4,not started,D13,
+F029,Chat,Error handling (auth / quota / timeout / malformed),n/a,include,4,not started,,
+F030,Generation,Foreground-service generation,n/a (app extension),include,5,not started,D18,
+F031,Generation,Quiet notification with Stop,n/a (app extension),include,5,not started,,
+F032,Generation,Interrupted-job recovery,n/a (app extension),include,5,not started,D18,app_generation_job
+F033,Chat,Edit message and branches,chat/Messages/UserMessage.svelte,include,6,not started,D3,
+F034,Chat,Regenerate and alternatives,ResponseMessage/RegenerateMenu.svelte,include,6,not started,D3,
+F035,Chat,Copy / share / rename / archive / delete / bulk actions,Sidebar/ChatMenu.svelte layout/ChatsModal.svelte,include,6,not started,,
+F036,Chat,Archived chats,layout/ArchivedChatsModal.svelte,include,6,not started,,
+F037,Chat,History search,layout/SearchModal.svelte,include,6,not started,,
+F038,Chat,Folders (nested),Sidebar/Folders.svelte RecursiveFolder.svelte,include,6,not started,,
+F039,Chat,Tags and pins,chat/Tags.svelte TagChatModal.svelte,include,6,not started,,
+F040,Chat,Math / syntax highlight / task lists / footnotes,chat/Messages/Markdown,include,6,not started,D22,
+F041,Chat,Image display and attachment previews,chat/Messages,include,6,not started,,
+F042,Chat,Saved prompts with variables and slash commands,workspace/Prompts MessageInput/Commands,include,6,not started,,
+F043,Chat,Multi-model responses,Messages/MultiResponseMessages.svelte,include,6,not started,,
+F044,Chat,Message queue,MessageInput/QueuedMessageItem.svelte,include,6,not started,D15,ui.enableMessageQueue
+F045,Chat,Temporary chats,chat/Chat.svelte,include,6,not started,,
+F046,Chat,Follow-up suggestions,ResponseMessage/FollowUps.svelte,include,6,not started,D13,
+F047,Chat,Auto tag generation,routers/tasks.py,include,6,not started,D13,
+F048,Chat,Chat direction / bubble / high contrast / copy formatted,Settings/Interface.svelte,include,6,not started,D15,
+F049,Chat,Message info panel with usage,ResponseMessage.svelte,include,6,not started,D13,
+F050,Chat,Message rating / feedback,ResponseMessage.svelte,exclude,,n/a,D10,feedback rows preserved
+F051,Tools,Tool orchestration layer,utils/tools.py middleware.py,include,7,not started,,
+F052,Tools,Web search (provider adapters),retrieval/web/*,include,7,not started,,See behavior-specs.md for provider list
+F053,Tools,Page fetch and local extraction,retrieval/loaders,include,7,not started,,
+F054,Tools,Citations and source references,chat/Messages/Citations,include,7,not started,,
+F055,Tools,Attach webpage by URL,MessageInput/AttachWebpageModal.svelte,include,7,not started,,
+F056,Tools,Tool approval prompts,n/a (app extension),include,7,not started,,
+F057,Tools,MCP / OpenAPI tool servers,Settings/Tools Connection.svelte,include,12,not started,,"External tool protocols, if feasible on-device"
+F058,Tools,Terminal servers,Settings/Integrations/Terminals,exclude,,n/a,D10,Server-side feature
+F059,Documents,Text / Markdown / CSV extraction,retrieval/loaders/main.py,include,8,not started,,
+F060,Documents,PDF text extraction,retrieval/loaders/main.py,include,8,not started,D11,Spike 2B
+F061,Documents,DOCX and other office formats,retrieval/loaders/main.py,include,8,not started,D11,
+F062,Documents,OCR,retrieval/loaders,include,8,not started,D11,Local only
+F063,Documents,Chunking with metadata,routers/retrieval.py,include,8,not started,,
+F064,Documents,Local embeddings and retrieval index,routers/retrieval.py,include,8,not started,D14,app_ tables
+F065,Documents,Knowledge collections,routers/knowledge.py workspace/Knowledge,include,8,not started,,
+F066,Documents,Chat file attachment retrieval,routers/files.py,include,8,not started,D14,"File bytes not carried in imports"
+F067,Documents,Cloud drive pickers (Google Drive / OneDrive),config.py ENABLE_GOOGLE_DRIVE_INTEGRATION,exclude,,n/a,,Needs third-party OAuth; revisit in Phase 12
+F068,Speech,Push-to-talk dictation,MessageInput/VoiceRecording.svelte,include,9,not started,,
+F069,Speech,Read aloud,Messages/ResponseMessage.svelte,include,9,not started,,
+F070,Speech,Voice call mode,MessageInput/CallOverlay.svelte,include,9,not started,,
+F071,Speech,Remote STT/TTS providers (explicit config),routers/audio.py,include,9,not started,,
+F072,Speech,Auto-playback / auto-send,Settings/Audio.svelte,include,9,not started,,
+F073,Images,Image generation providers,routers/images.py,include,9,not started,,
+F074,Images,Image editing,routers/images.py,include,9,not started,,
+F075,Images,Generated image history and save/share,n/a,include,9,not started,,
+F076,Code,Sandboxed Python execution,Messages/CodeExecutionModal.svelte,include,10,not started,D11,Release gate
+F077,Code,Code interpreter tool,utils/code_interpreter.py,include,10,not started,D11,
+F078,Plugins,Tools (Python),routers/tools.py,include,11,not started,D11,
+F079,Plugins,Functions (filters / pipes / actions),routers/functions.py,include,11,not started,D11,
+F080,Plugins,Valves and UserValves,chat/Controls/Valves.svelte,include,11,not started,,
+F081,Plugins,Pipelines server,routers/pipelines.py,exclude,,n/a,D10,Server-side
+F082,Workspace,Models: merged list / presets / overrides,routers/models.py workspace/Models,include,12,not started,D19,
+F083,Workspace,Prompts + history,routers/prompts.py workspace/Prompts,include,12,not started,,prompt_history table
+F084,Workspace,Knowledge UI,workspace/Knowledge,include,12,not started,,
+F085,Workspace,Tools and Functions management UI,workspace/Tools.svelte,include,12,not started,,
+F086,Workspace,Skills,routers/skills.py workspace/Skills,include,12,not started,D19,"Named instruction sets (skill row: name, description, content, is_active); attached via model meta.skillIds or per-message skill_ids"
+F087,Workspace,Access control / sharing,workspace/common/AccessControl.svelte,exclude,,n/a,D19,access_grant rows preserved
+F088,Single-user,Notes (editor + AI actions),routers/notes.py notes/,include,12,not started,D10,
+F089,Single-user,Memories,routers/memories.py Settings/Personalization,include,12,not started,D10,
+F090,Single-user,Playground (chat / completions / images),playground/,include,12,not started,D10,
+F091,Single-user,Calendar,n/a,include,12,not started,D10,Added to menu only once built
+F092,Single-user,Automations,n/a,include,12,not started,D10,Added to menu only once built; WorkManager timing limits documented
+F093,Single-user,Merge import of webui.db,routers/chats.py,adapt,12,not started,D2,app_import_batch
+F094,Single-user,Export,Settings/DataControls.svelte,adapt,12,not started,D2 D5,
+F095,Single-user,Backup and restore,n/a,include,12,not started,D2,
+F096,Single-user,Usage reporting,routers/analytics.py,adapt,12,not started,,Local only
+F097,Single-user,Personalization banners and landing page mode,Settings/Interface.svelte,include,12,not started,D15,
+F098,Excluded,Registration / login / password / API keys for users,routers/auths.py,exclude,,n/a,,Single local user
+F099,Excluded,Admin users / groups / SCIM / LDAP / OAuth,routers/users.py groups.py scim.py,exclude,,n/a,,Multi-user
+F100,Excluded,Channels (team chat),routers/channels.py,exclude,,n/a,D10,
+F101,Excluded,Evaluations / Arena / leaderboard,routers/evaluations.py,exclude,,n/a,D10,feedback rows preserved
+F102,Excluded,User status / presence,Sidebar/UserStatusModal.svelte,exclude,,n/a,D10,
+F103,Excluded,Update banners / changelog / shortcuts tab,UpdateInfoToast.svelte ChangelogModal.svelte,exclude,,n/a,D15,
+F104,Excluded,Server DB / vector DB / storage-backend / telemetry / rate-limit settings,admin/Settings/Database.svelte,exclude,,n/a,,Server-only operations
+F105,Accessibility,TalkBack / large text / keyboard insets / landscape,n/a,include,3,not started,,Phase 3 acceptance
+F106,Release,SBOM / license inventory / signed release,n/a,include,13,not started,,

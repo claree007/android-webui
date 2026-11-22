@@ -3,6 +3,9 @@
     <string name="app_name">Android WebUI</string>
     <string name="back">Back</string>
     <string name="close">Close</string>
+    <string name="loading">Loading…</string>
+    <string name="retry">Retry</string>
+    <string name="unsupported_title">Not supported</string>
     <string name="settings_title">Settings</string>
     <string name="theme_title">Theme</string>
     <string name="theme_summary">Choose the colour theme used by the interface.</string>

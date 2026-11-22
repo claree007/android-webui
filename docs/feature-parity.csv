@@ -4,7 +4,7 @@ F002,Foundation,webui.db-compatible schema,models/*.py,adapt,1,done,D1 D4,Schema
 F003,Foundation,Keystore-backed API key storage,config.py openai.api_keys,adapt,1,done,D5,DB holds keystore:<id> references
 F004,Foundation,Light/dark/system theme,Settings/Interface,adapt,1,done,D7,Device-only SharedPreferences
 F005,Foundation,Docker build + CI,n/a,include,1,done,,scripts/dev
-F006,Shell,Empty / new-chat screen with suggestions,chat/Placeholder.svelte Suggestions.svelte,include,3,"partial: shell, no suggestions",,Screens 01
+F006,Shell,Empty / new-chat screen with suggestions,chat/Placeholder.svelte Suggestions.svelte,include,3,"partial: title, composer and states built; model suggestions need Phase 4 data",,Screens 01
 F007,Shell,Sidebar: new chat / search / notes / workspace / folders / chats by date,layout/Sidebar.svelte,adapt,3,"partial: drawer lists models, folders and chats by date from SidebarState; title search sheet; real data in Phase 4/6",D10,Native drawer
 F008,Shell,Sidebar Models list (pinned models),Sidebar/PinnedModelList.svelte,include,3,not started,D10,
 F009,Shell,User menu (Settings / Playground / Workspace / Notes / Memories),Sidebar/UserMenu.svelte,adapt,3,"partial: Workspace/Playground/Notes/Memories open screens that state the phase they are built in",D10,Sign Out / status / Admin Panel / Channels removed
@@ -103,5 +103,5 @@ F101,Excluded,Evaluations / Arena / leaderboard,routers/evaluations.py,exclude,,
 F102,Excluded,User status / presence,Sidebar/UserStatusModal.svelte,exclude,,n/a,D10,
 F103,Excluded,Update banners / changelog / shortcuts tab,UpdateInfoToast.svelte ChangelogModal.svelte,exclude,,n/a,D15,
 F104,Excluded,Server DB / vector DB / storage-backend / telemetry / rate-limit settings,admin/Settings/Database.svelte,exclude,,n/a,,Server-only operations
-F105,Accessibility,TalkBack / large text / keyboard insets / landscape,n/a,include,3,not started,,Phase 3 acceptance
+F105,Accessibility,TalkBack / large text / keyboard insets / landscape,n/a,include,3,"partial: JVM tests cover named controls, 2x font scale, landscape, small screen and state restoration; TalkBack and keyboard insets on a device NOT RUN",,Phase 3 acceptance
 F106,Release,SBOM / license inventory / signed release,n/a,include,13,not started,,

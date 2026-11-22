@@ -41,3 +41,7 @@ Each dependency needs a one-line justification here before it is added.
 | `org.xerial:sqlite-jdbc` (test) | Runs the SQLite schema and repository tests on the JVM; not shipped in the app |
 
 Excluded by the plan: Hilt, KSP, Room, DataStore (D4, D6, D7).
+
+## UI testing notes
+
+UI tests are Robolectric + Compose tests that run in `./scripts/dev test` with no device. They cover navigation, state restoration (rotation equivalent), 2x font scale, landscape and small-screen layouts, named controls (a proxy for TalkBack labels), and the colours resolved in each theme. Pixel screenshot capture was tried and does not complete in the Docker aarch64 environment (`captureToImage` times out), so there are no screenshot goldens. TalkBack, real keyboard insets and physical rotation are **not run** and need a device.

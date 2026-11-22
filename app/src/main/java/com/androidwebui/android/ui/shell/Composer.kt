@@ -24,6 +24,8 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.androidwebui.android.R
 
@@ -39,6 +41,7 @@ fun Composer(
     modifier: Modifier = Modifier,
 ) {
     val colors = MaterialTheme.colorScheme
+    val placeholder = stringResource(R.string.composer_placeholder)
     Column(
         modifier
             .fillMaxWidth()
@@ -49,7 +52,7 @@ fun Composer(
         Box(Modifier.fillMaxWidth().heightIn(min = 40.dp).padding(horizontal = 4.dp), contentAlignment = Alignment.CenterStart) {
             if (draft.isEmpty()) {
                 Text(
-                    stringResource(R.string.composer_placeholder),
+                    placeholder,
                     style = MaterialTheme.typography.bodyLarge,
                     color = colors.onSurfaceVariant,
                 )
@@ -60,7 +63,7 @@ fun Composer(
                 textStyle = MaterialTheme.typography.bodyLarge.copy(color = colors.onSurface),
                 cursorBrush = SolidColor(colors.onSurface),
                 maxLines = 8,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().semantics { contentDescription = placeholder },
             )
         }
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {

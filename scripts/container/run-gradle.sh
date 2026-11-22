@@ -27,7 +27,7 @@ if [ -f "$props" ]; then
   fi
 fi
 
-export GRADLE_OPTS="-Xmx${GRADLE_XMX:-4g} -XX:MaxMetaspaceSize=1g"
+export GRADLE_OPTS="-Xmx${GRADLE_XMX:-2g} -XX:MaxMetaspaceSize=512m"
 
 extra=()
 if [ "$(uname -m)" = "aarch64" ]; then

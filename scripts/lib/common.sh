@@ -8,8 +8,8 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 IMAGE="${ANDROID_WEBUI_IMAGE:-android-webui-build:2}"
 # Named volume that persists the Gradle cache between runs.
 GRADLE_VOLUME="${ANDROID_WEBUI_GRADLE_VOLUME:-android-webui-gradle-cache}"
-DOCKER_MEMORY="${DOCKER_MEMORY:-8g}"
-GRADLE_XMX="${GRADLE_XMX:-4g}"
+DOCKER_MEMORY="${DOCKER_MEMORY:-6g}"
+GRADLE_XMX="${GRADLE_XMX:-2g}"
 GRADLE_WORKERS="${GRADLE_WORKERS:-2}"
 
 # Gradle distribution is downloaded on the host (`scripts/dev setup`) and mounted

@@ -24,7 +24,7 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends \
       openjdk-17-jdk-headless git curl unzip zip ca-certificates \
  && if [ "$TARGETARCH" = "arm64" ]; then \
-      apt-get install -y --no-install-recommends qemu-user-static libc6-amd64-cross; \
+      apt-get install -y --no-install-recommends qemu-user-static libc6-amd64-cross libgcc-s1-amd64-cross libstdc++6-amd64-cross; \
     fi \
  && rm -rf /var/lib/apt/lists/*
 

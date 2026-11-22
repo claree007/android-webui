@@ -1,0 +1,16 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./scripts/dev setup
+      - run: ./scripts/dev test
+      - run: ./scripts/dev build
+      - run: ./scripts/dev lint

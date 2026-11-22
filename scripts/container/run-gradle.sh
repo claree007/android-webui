@@ -17,7 +17,7 @@ if [ -f "$props" ]; then
   dest="$GRADLE_USER_HOME/wrapper/dists/$dist_name/$hash"
   if [ ! -f "$dest/$zip_name.ok" ]; then
     [ -f "/gradle-dist/$zip_name" ] || {
-      echo "ERROR: /gradle-dist/$zip_name missing. Run ./scripts/fetch-gradle.sh on the host." >&2
+      echo "ERROR: /gradle-dist/$zip_name missing. Run ./scripts/dev setup on the host." >&2
       exit 1
     }
     echo "Seeding Gradle wrapper cache: $dest"

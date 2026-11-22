@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+# Single entry point for building and checking the app. Everything runs in Docker.
+# Run `./scripts/dev help` for usage; see DEVELOPMENT.md for details.
+set -euo pipefail
+source "$(dirname "${BASH_SOURCE[0]}")/lib/common.sh"
+
+usage() {
+  cat <<'EOF'
+Usage: ./scripts/dev <command> [args]
+
+  setup [--no-cache]   Build the Docker build image and download Gradle (one-time)
+  build [gradle args]  Build the debug APK
+  test  [gradle args]  Run JVM unit tests, e.g. --tests '*Schema*'
+  lint  [gradle args]  Run Android lint
+  schema [webui.db]    Regenerate the schema asset and test fingerprint (default ../webui.db)
+EOF
+}
+
+setup_image() {
+  require_docker
+  log "Building image $IMAGE (first build downloads the SDK; takes several minutes)"
+  docker build "$@" -t "$IMAGE" -f "$REPO_ROOT/docker/Dockerfile" "$REPO_ROOT/docker"
+}
+
+# Download Gradle on the host (resumable, checksum-verified) so containers never do.
+fetch_gradle() {
+  mkdir -p "$GRADLE_DIST_DIR"
+  local zip="$GRADLE_DIST_DIR/gradle-$GRADLE_VERSION-bin.zip"
+  local base="https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip"
+  local expected
+  expected="$(curl -fsSL "$base.sha256")"
+  [ -n "$expected" ] || die "could not fetch checksum for Gradle $GRADLE_VERSION"
+
+  verify() { [ -f "$zip" ] && [ "$(shasum -a 256 "$zip" | awk '{print $1}')" = "$expected" ]; }
+  if verify; then log "Gradle already downloaded and verified: $zip"; return 0; fi
+
+  log "Downloading Gradle $GRADLE_VERSION to $zip (resumable; re-run if interrupted)"
+  curl -fL --retry 10 --retry-delay 3 --retry-all-errors -C - -o "$zip" "$base"
+  verify || { rm -f "$zip"; die "checksum mismatch for $zip; file removed, re-run to download again"; }
+  log "Verified sha256 $expected"
+}
+
+export_schema() {
+  command -v python3 >/dev/null 2>&1 || die "python3 not found"
+  local src="${1:-$REPO_ROOT/../webui.db}"
+  [ -f "$src" ] || die "reference database not found: $src"
+  python3 "$REPO_ROOT/scripts/export_open_webui_schema.py" "$src" "$REPO_ROOT"
+  log "wrote app/src/main/assets/webui_schema.sql and app/src/test/resources/open-webui-schema-fingerprint.txt"
+}
+
+cmd="${1:-help}"
+[ $# -gt 0 ] && shift
+case "$cmd" in
+  setup) setup_image "$@"; fetch_gradle ;;
+  build)
+    run_gradle :app:assembleDebug "$@"
+    [ -f "$DEBUG_APK" ] || die "expected APK not found: $DEBUG_APK"
+    log "APK: $DEBUG_APK"
+    ;;
+  test) run_gradle :app:testDebugUnitTest "$@" ;;
+  lint) run_gradle :app:lintDebug "$@" ;;
+  schema) export_schema "$@" ;;
+  help|-h|--help) usage ;;
+  *) usage >&2; die "unknown command: $cmd" ;;
+esac

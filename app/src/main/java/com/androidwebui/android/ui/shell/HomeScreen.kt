@@ -23,14 +23,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.androidwebui.android.R
+import java.time.LocalDate
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(profileName: String, onOpenSettings: () -> Unit) {
+fun HomeScreen(
+    profileName: String,
+    onOpenSettings: () -> Unit,
+    sidebar: SidebarState = SidebarState(),
+    today: LocalDate = LocalDate.now(),
+) {
     val drawer = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var draft by rememberSaveable { mutableStateOf("") }
     var showModels by rememberSaveable { mutableStateOf(false) }
+    var showSearch by rememberSaveable { mutableStateOf(false) }
     var unavailable by rememberSaveable { mutableStateOf<Feature?>(null) }
 
     fun closeDrawer() = scope.launch { drawer.close() }
@@ -41,8 +48,12 @@ fun HomeScreen(profileName: String, onOpenSettings: () -> Unit) {
             ModalDrawerSheet {
                 Sidebar(
                     profileName = profileName,
+                    state = sidebar,
+                    today = today,
                     onNewChat = { draft = ""; closeDrawer() },
-                    onUnavailable = { unavailable = it; closeDrawer() },
+                    onOpenChat = { unavailable = Feature.Chats; closeDrawer() },
+                    onSelectModel = { unavailable = Feature.Sending; closeDrawer() },
+                    onUnavailable = { if (it == Feature.Search) showSearch = true else unavailable = it; closeDrawer() },
                     onOpenFeature = { unavailable = it; closeDrawer() },
                     onOpenSettings = { closeDrawer(); onOpenSettings() },
                 )
@@ -80,6 +91,9 @@ fun HomeScreen(profileName: String, onOpenSettings: () -> Unit) {
             onRetry = {},
             onDismiss = { showModels = false },
         )
+    }
+    if (showSearch) {
+        ChatSearchSheet(sidebar.chats, onOpen = { showSearch = false; unavailable = Feature.Chats }, onDismiss = { showSearch = false })
     }
     unavailable?.let { UnavailableDialog(it, onDismiss = { unavailable = null }) }
 }

@@ -17,6 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,14 +32,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.androidwebui.android.ui.components.ErrorState
+import com.androidwebui.android.ui.components.LoadingState
+import java.time.LocalDate
 import com.androidwebui.android.R
 
 /** Native drawer equivalent of the web app's sidebar. Sections that need later phases say so. */
 @Composable
 fun Sidebar(
     profileName: String,
+    state: SidebarState,
+    today: LocalDate,
     onNewChat: () -> Unit,
+    onOpenChat: (ChatSummary) -> Unit,
+    onSelectModel: (ModelOption) -> Unit,
     onUnavailable: (Feature) -> Unit,
     onOpenFeature: (Feature) -> Unit,
     onOpenSettings: () -> Unit,
@@ -53,12 +62,28 @@ fun Sidebar(
         SidebarRow(R.drawable.ic_search, stringResource(R.string.search)) { onUnavailable(Feature.Search) }
 
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) {
-            SectionHeader(stringResource(R.string.sidebar_models))
-            SectionNote(stringResource(R.string.sidebar_models_empty))
-            SectionHeader(stringResource(R.string.sidebar_folders))
-            SectionNote(stringResource(R.string.sidebar_folders_unavailable))
-            SectionHeader(stringResource(R.string.sidebar_chats))
-            SectionNote(stringResource(R.string.sidebar_chats_empty))
+            when {
+                state.loading -> LoadingState()
+                state.error != null -> ErrorState(state.error)
+                else -> {
+                    SectionHeader(stringResource(R.string.sidebar_models))
+                    if (state.models.isEmpty()) SectionNote(stringResource(R.string.sidebar_models_empty))
+                    state.models.forEach { SidebarItem(it.name) { onSelectModel(it) } }
+
+                    SectionHeader(stringResource(R.string.sidebar_folders), onAdd = { onUnavailable(Feature.Folders) })
+                    if (state.folders.isEmpty()) SectionNote(stringResource(R.string.sidebar_folders_unavailable))
+                    state.folders.forEach { SidebarItem(it.name) { onUnavailable(Feature.Folders) } }
+
+                    if (state.chats.isEmpty()) {
+                        SectionHeader(stringResource(R.string.sidebar_chats))
+                        SectionNote(stringResource(R.string.sidebar_chats_empty))
+                    }
+                    groupChatsByDate(state.chats, today).forEach { section ->
+                        SectionHeader(section.group.title())
+                        section.chats.forEach { chat -> SidebarItem(chat.title) { onOpenChat(chat) } }
+                    }
+                }
+            }
         }
 
         UserRow(profileName, onOpenFeature, onOpenSettings)
@@ -82,13 +107,48 @@ private fun SidebarRow(iconRes: Int, label: String, onClick: () -> Unit) {
 }
 
 @Composable
-private fun SectionHeader(text: String) {
+private fun SectionHeader(text: String, onAdd: (() -> Unit)? = null) {
+    Row(
+        Modifier.fillMaxWidth().padding(start = 20.dp, end = if (onAdd == null) 20.dp else 4.dp, top = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text,
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.weight(1f).padding(vertical = 8.dp),
+        )
+        if (onAdd != null) {
+            IconButton(onClick = onAdd) {
+                Icon(painterResource(R.drawable.ic_add), contentDescription = stringResource(R.string.sidebar_folder_add), Modifier.size(20.dp))
+            }
+        }
+    }
+}
+
+@Composable
+private fun SidebarItem(label: String, onClick: () -> Unit) {
     Text(
-        text,
-        style = MaterialTheme.typography.labelLarge,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp, bottom = 4.dp),
+        label,
+        style = MaterialTheme.typography.bodyLarge,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 48.dp)
+            .clickable(role = Role.Button, onClick = onClick)
+            .padding(horizontal = 20.dp, vertical = 12.dp),
     )
+}
+
+@Composable
+private fun ChatGroup.title(): String = when (this) {
+    ChatGroup.Pinned -> stringResource(R.string.group_pinned)
+    ChatGroup.Today -> stringResource(R.string.group_today)
+    ChatGroup.Yesterday -> stringResource(R.string.group_yesterday)
+    ChatGroup.Previous7Days -> stringResource(R.string.group_previous_7_days)
+    ChatGroup.Previous30Days -> stringResource(R.string.group_previous_30_days)
+    is ChatGroup.Month -> label
 }
 
 @Composable

@@ -5,7 +5,7 @@ F003,Foundation,Keystore-backed API key storage,config.py openai.api_keys,adapt,
 F004,Foundation,Light/dark/system theme,Settings/Interface,adapt,1,done,D7,Device-only SharedPreferences
 F005,Foundation,Docker build + CI,n/a,include,1,done,,scripts/dev
 F006,Shell,Empty / new-chat screen with suggestions,chat/Placeholder.svelte Suggestions.svelte,include,3,"partial: shell, no suggestions",,Screens 01
-F007,Shell,Sidebar: new chat / search / notes / workspace / folders / chats by date,layout/Sidebar.svelte,adapt,3,"partial: drawer shell, no data",D10,Native drawer
+F007,Shell,Sidebar: new chat / search / notes / workspace / folders / chats by date,layout/Sidebar.svelte,adapt,3,"partial: drawer lists models, folders and chats by date from SidebarState; title search sheet; real data in Phase 4/6",D10,Native drawer
 F008,Shell,Sidebar Models list (pinned models),Sidebar/PinnedModelList.svelte,include,3,not started,D10,
 F009,Shell,User menu (Settings / Playground / Workspace / Notes / Memories),Sidebar/UserMenu.svelte,adapt,3,"partial: Workspace/Playground/Notes/Memories show ""not available yet""",D10,Sign Out / status / Admin Panel / Channels removed
 F010,Shell,Model selector sheet,chat/ModelSelector,include,3,"partial: search, filter, selection, set-default and loading/error/empty built against ModelListState; real model list in Phase 4",D19,Screens 32

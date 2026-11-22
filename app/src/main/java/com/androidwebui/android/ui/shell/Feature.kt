@@ -7,6 +7,7 @@ import com.androidwebui.android.R
 enum class Feature(@StringRes val labelRes: Int) {
     Search(R.string.search),
     Folders(R.string.sidebar_folders),
+    Chats(R.string.sidebar_chats),
     Attachments(R.string.composer_attach),
     Sending(R.string.composer_send),
     ChatControls(R.string.chat_controls),

@@ -14,4 +14,9 @@ enum class Feature(@StringRes val labelRes: Int) {
     Playground(R.string.menu_playground),
     Notes(R.string.menu_notes),
     Memories(R.string.menu_memories),
+    ChatShare(R.string.chat_menu_share),
+    ChatDownload(R.string.chat_menu_download),
+    ChatRename(R.string.chat_menu_rename),
+    ChatArchive(R.string.chat_menu_archive),
+    ChatDelete(R.string.chat_menu_delete),
 }

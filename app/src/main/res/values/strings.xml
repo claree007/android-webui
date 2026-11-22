@@ -33,6 +33,18 @@
     <string name="menu_notes">Notes</string>
     <string name="menu_memories">Memories</string>
 
+    <!-- Chat -->
+    <string name="chat_menu">Chat options</string>
+    <string name="chat_menu_share">Share</string>
+    <string name="chat_menu_download">Download</string>
+    <string name="chat_menu_rename">Rename</string>
+    <string name="chat_menu_archive">Archive</string>
+    <string name="chat_menu_delete">Delete</string>
+    <string name="message_copy">Copy message</string>
+    <string name="message_failed">The response failed.</string>
+    <string name="message_interrupted">Interrupted. The latest saved part of the reply is shown.</string>
+    <string name="message_stopped">Stopped.</string>
+
     <!-- New chat and composer -->
     <string name="composer_placeholder">How can I help you today?</string>
     <string name="composer_attach">Attach</string>

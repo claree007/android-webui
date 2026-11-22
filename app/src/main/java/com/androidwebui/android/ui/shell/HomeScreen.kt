@@ -1,0 +1,74 @@
+package com.androidwebui.android.ui.shell
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.rememberDrawerState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.androidwebui.android.R
+import kotlinx.coroutines.launch
+
+@Composable
+fun HomeScreen(profileName: String, onOpenSettings: () -> Unit) {
+    val drawer = rememberDrawerState(DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+    var draft by rememberSaveable { mutableStateOf("") }
+    var showModels by rememberSaveable { mutableStateOf(false) }
+    var unavailable by rememberSaveable { mutableStateOf<Feature?>(null) }
+
+    fun closeDrawer() = scope.launch { drawer.close() }
+
+    ModalNavigationDrawer(
+        drawerState = drawer,
+        drawerContent = {
+            ModalDrawerSheet {
+                Sidebar(
+                    profileName = profileName,
+                    onNewChat = { draft = ""; closeDrawer() },
+                    onUnavailable = { unavailable = it; closeDrawer() },
+                    onOpenFeature = { unavailable = it; closeDrawer() },
+                    onOpenSettings = { closeDrawer(); onOpenSettings() },
+                )
+            }
+        },
+    ) {
+        Column(Modifier.fillMaxSize()) {
+            Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp)) {
+                IconButton(onClick = { scope.launch { drawer.open() } }) {
+                    Icon(painterResource(R.drawable.ic_menu), stringResource(R.string.open_sidebar))
+                }
+                Spacer(Modifier.weight(1f))
+                IconButton(onClick = { unavailable = Feature.ChatControls }) {
+                    Icon(painterResource(R.drawable.ic_tune), stringResource(R.string.chat_controls))
+                }
+            }
+            NewChatScreen(
+                draft = draft,
+                onDraftChange = { draft = it },
+                onOpenModels = { showModels = true },
+                onUnavailable = { unavailable = it },
+                modifier = Modifier.weight(1f),
+            )
+        }
+    }
+
+    if (showModels) ModelSelectorSheet(onDismiss = { showModels = false })
+    unavailable?.let { UnavailableDialog(it, onDismiss = { unavailable = null }) }
+}

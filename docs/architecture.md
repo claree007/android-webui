@@ -20,6 +20,8 @@ Product scope and decisions (D1–D22) live in [`../new_implementation_plan.md`]
 | `core/prefs` | Device-only preferences in `SharedPreferences` (D7) |
 | `core/security` | Keystore-backed `SecretStore`; the DB stores only `keystore:<id>` references (D5) |
 | `ui` | Compose theme and navigation |
+| `ui/shell` | Phase 3 shell: drawer sidebar, new-chat screen, composer, model selector sheet. Features not built yet open an "unavailable" dialog instead of doing nothing |
+| `ui/settings` | Settings screen with Back chip and scrolling tabs; only General (theme) is built |
 
 The schema is generated from the Open WebUI web app's reference database by `./scripts/dev schema` into `app/src/main/assets/webui_schema.sql` (DDL only, no data) and `app/src/test/resources/open-webui-schema-fingerprint.txt`. `SchemaTest` compares the database created by the app with that fingerprint.
 

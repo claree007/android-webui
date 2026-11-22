@@ -1,18 +1,18 @@
 id,area,feature,reference,disposition,phase,status,decision,notes
-F001,Foundation,Local profile "User" without login,auths.py users.py,adapt,1,done,D1,One `user` row created on first run
+F001,Foundation,"Local profile ""User"" without login",auths.py users.py,adapt,1,done,D1,One `user` row created on first run
 F002,Foundation,webui.db-compatible schema,models/*.py,adapt,1,done,D1 D4,Schema asset generated from reference DB; SchemaTest compares fingerprint
 F003,Foundation,Keystore-backed API key storage,config.py openai.api_keys,adapt,1,done,D5,DB holds keystore:<id> references
 F004,Foundation,Light/dark/system theme,Settings/Interface,adapt,1,done,D7,Device-only SharedPreferences
 F005,Foundation,Docker build + CI,n/a,include,1,done,,scripts/dev
-F006,Shell,Empty / new-chat screen with suggestions,chat/Placeholder.svelte Suggestions.svelte,include,3,not started,,Screens 01
-F007,Shell,Sidebar: new chat / search / notes / workspace / folders / chats by date,layout/Sidebar.svelte,adapt,3,not started,D10,Native drawer
+F006,Shell,Empty / new-chat screen with suggestions,chat/Placeholder.svelte Suggestions.svelte,include,3,"partial: shell, no suggestions",,Screens 01
+F007,Shell,Sidebar: new chat / search / notes / workspace / folders / chats by date,layout/Sidebar.svelte,adapt,3,"partial: drawer shell, no data",D10,Native drawer
 F008,Shell,Sidebar Models list (pinned models),Sidebar/PinnedModelList.svelte,include,3,not started,D10,
-F009,Shell,User menu (Settings / Playground / Workspace / Notes / Memories),Sidebar/UserMenu.svelte,adapt,3,not started,D10,Sign Out / status / Admin Panel / Channels removed
-F010,Shell,Model selector sheet,chat/ModelSelector,include,3,not started,D19,Screens 32
+F009,Shell,User menu (Settings / Playground / Workspace / Notes / Memories),Sidebar/UserMenu.svelte,adapt,3,"partial: Workspace/Playground/Notes/Memories show ""not available yet""",D10,Sign Out / status / Admin Panel / Channels removed
+F010,Shell,Model selector sheet,chat/ModelSelector,include,3,partial: sheet shows empty state,D19,Screens 32
 F011,Shell,Chat navbar menu (share / download / rename / archive / delete / controls),layout/Navbar/Menu.svelte,adapt,3,not started,,Share = Android share sheet; no public share links
 F012,Shell,Chat controls panel (system prompt + advanced params),chat/Controls Settings/Advanced,include,4,not started,,Screens 31
-F013,Shell,Settings full-height sheet with tabs,chat/SettingsModal.svelte,adapt,3,not started,D15,
-F014,Shell,Loading / error / empty / unsupported states,n/a,include,3,not started,,
+F013,Shell,Settings full-height sheet with tabs,chat/SettingsModal.svelte,adapt,3,partial: General tab only,D15,
+F014,Shell,Loading / error / empty / unsupported states,n/a,include,3,partial,,
 F015,Connections,OpenAI-compatible connection (url / key / prefix / tags / model allow-list / enable),admin/Settings/Connections/OpenAIConnection.svelte,include,4,not started,D16,config key openai.*
 F016,Connections,Ollama connection,admin/Settings/Connections/OllamaConnection.svelte,include,4,not started,D16,config key ollama.*
 F017,Connections,Additional provider types (Gemini / Anthropic ...),n/a (app extension),include,4,not started,D17,api_configs[i].provider_type
@@ -64,7 +64,7 @@ F062,Documents,OCR,retrieval/loaders,include,8,not started,D11,Local only
 F063,Documents,Chunking with metadata,routers/retrieval.py,include,8,not started,,
 F064,Documents,Local embeddings and retrieval index,routers/retrieval.py,include,8,not started,D14,app_ tables
 F065,Documents,Knowledge collections,routers/knowledge.py workspace/Knowledge,include,8,not started,,
-F066,Documents,Chat file attachment retrieval,routers/files.py,include,8,not started,D14,"File bytes not carried in imports"
+F066,Documents,Chat file attachment retrieval,routers/files.py,include,8,not started,D14,File bytes not carried in imports
 F067,Documents,Cloud drive pickers (Google Drive / OneDrive),config.py ENABLE_GOOGLE_DRIVE_INTEGRATION,exclude,,n/a,,Needs third-party OAuth; revisit in Phase 12
 F068,Speech,Push-to-talk dictation,MessageInput/VoiceRecording.svelte,include,9,not started,,
 F069,Speech,Read aloud,Messages/ResponseMessage.svelte,include,9,not started,,

@@ -2,12 +2,54 @@
 <resources>
     <string name="app_name">Android WebUI</string>
     <string name="back">Back</string>
-    <string name="home_profile">Profile: %1$s</string>
-    <string name="home_profile_loading">loading…</string>
-    <string name="home_chat_pending">Chat is not available yet.</string>
+    <string name="close">Close</string>
     <string name="settings_title">Settings</string>
     <string name="theme_title">Theme</string>
+    <string name="theme_summary">Choose the colour theme used by the interface.</string>
     <string name="theme_system">Follow system</string>
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
+
+    <!-- Shell -->
+    <string name="open_sidebar">Open sidebar</string>
+    <string name="chat_controls">Chat controls</string>
+    <string name="chat_controls_unavailable">Chat controls are not available yet.</string>
+    <string name="new_chat">New chat</string>
+    <string name="search">Search</string>
+    <string name="search_unavailable">Search is not available yet.</string>
+    <string name="sidebar_models">Models</string>
+    <string name="sidebar_models_empty">No models yet. Connections are not available yet.</string>
+    <string name="sidebar_folders">Folders</string>
+    <string name="sidebar_folders_unavailable">Folders are not available yet.</string>
+    <string name="sidebar_chats">Chats</string>
+    <string name="sidebar_chats_empty">No chats yet.</string>
+    <string name="profile_loading">User</string>
+    <string name="user_menu">User menu</string>
+    <string name="menu_workspace">Workspace</string>
+    <string name="menu_playground">Playground</string>
+    <string name="menu_notes">Notes</string>
+    <string name="menu_memories">Memories</string>
+
+    <!-- New chat and composer -->
+    <string name="composer_placeholder">How can I help you today?</string>
+    <string name="composer_attach">Attach</string>
+    <string name="composer_attach_unavailable">Attachments are not available yet.</string>
+    <string name="composer_send">Send</string>
+    <string name="composer_send_unavailable">Sending is not available yet. No model connection can be configured so far.</string>
+    <string name="model_selector_title">Select a model</string>
+    <string name="model_selector_none">No model</string>
+    <string name="model_selector_empty">No models are available. Adding a model connection is not possible yet.</string>
+    <string name="model_selector_open">Choose model</string>
+
+    <!-- Unavailable features -->
+    <string name="unavailable_title">Not available yet</string>
+    <string name="unavailable_body">%1$s is planned but has not been built yet.</string>
+
+    <!-- Settings tabs -->
+    <string name="settings_tab_general">General</string>
+    <string name="settings_tab_interface">Interface</string>
+    <string name="settings_tab_connections">Connections</string>
+    <string name="settings_tab_audio">Audio</string>
+    <string name="settings_tab_personalization">Personalization</string>
+    <string name="settings_tab_data">Data</string>
 </resources>

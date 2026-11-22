@@ -35,6 +35,9 @@ Each dependency needs a one-line justification here before it is added.
 | `androidx.compose.ui:ui`, `material3` (BOM) | UI toolkit and Material 3 components |
 | `androidx.navigation:navigation-compose` | Screen navigation (plan stack) |
 | `kotlinx-coroutines-android` | Coroutines and `StateFlow` for state and background work |
+| `org.jetbrains.kotlinx:kotlinx-serialization-json` (+ compiler plugin) | JSON for the `chat.chat` message graph, `config` and `user.settings` documents, and provider payloads; `JsonObject` lets unknown keys round-trip untouched |
+| `com.squareup.okhttp3:okhttp` | The single networking library (D9): cancellable streaming, redirect and credential control, timeouts. Pinned to 5.4.0 because 5.5.x requires compileSdk 37, which Android Gradle plugin 8.13.2 does not support |
+| `com.squareup.okhttp3:mockwebserver3` (test) | Local HTTP server so provider and streaming tests never call a real service |
 | `junit` (test) | JVM unit tests |
 | `org.robolectric:robolectric` (test) | Runs Compose UI tests on the JVM inside the Docker build, with no device or emulator |
 | `androidx.compose.ui:ui-test-junit4`, `ui-test-manifest` (test) | Compose semantics-based UI tests (`createComposeRule`) |

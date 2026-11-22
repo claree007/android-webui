@@ -69,6 +69,17 @@ fun HomeScreen(profileName: String, onOpenSettings: () -> Unit) {
         }
     }
 
-    if (showModels) ModelSelectorSheet(onDismiss = { showModels = false })
+    if (showModels) {
+        // Model discovery arrives with connections (Phase 4); until then there is nothing to list.
+        ModelSelectorSheet(
+            state = ModelListState.Loaded(emptyList()),
+            selectedId = null,
+            defaultId = null,
+            onSelect = { showModels = false },
+            onSetDefault = {},
+            onRetry = {},
+            onDismiss = { showModels = false },
+        )
+    }
     unavailable?.let { UnavailableDialog(it, onDismiss = { unavailable = null }) }
 }

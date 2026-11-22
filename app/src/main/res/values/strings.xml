@@ -55,6 +55,13 @@
     <string name="model_selector_none">No model</string>
     <string name="model_selector_empty">No models are available. Adding a model connection is not possible yet.</string>
     <string name="model_selector_open">Choose model</string>
+    <string name="model_selector_search">Search a model</string>
+    <string name="model_selector_filter_all">All</string>
+    <string name="model_selector_filter">Filter models</string>
+    <string name="model_selector_no_match">No model matches your search.</string>
+    <string name="model_selector_selected">Selected</string>
+    <string name="model_selector_set_default">Set as default</string>
+    <string name="model_selector_default_set">Default model</string>
 
     <!-- Unavailable features -->
     <string name="unavailable_title">Not available yet</string>

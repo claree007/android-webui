@@ -30,6 +30,7 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     profileName: String,
     onOpenSettings: () -> Unit,
+    onOpenDestination: (Feature) -> Unit,
     sidebar: SidebarState = SidebarState(),
     today: LocalDate = LocalDate.now(),
 ) {
@@ -54,7 +55,7 @@ fun HomeScreen(
                     onOpenChat = { unavailable = Feature.Chats; closeDrawer() },
                     onSelectModel = { unavailable = Feature.Sending; closeDrawer() },
                     onUnavailable = { if (it == Feature.Search) showSearch = true else unavailable = it; closeDrawer() },
-                    onOpenFeature = { unavailable = it; closeDrawer() },
+                    onOpenFeature = { closeDrawer(); onOpenDestination(it) },
                     onOpenSettings = { closeDrawer(); onOpenSettings() },
                 )
             }

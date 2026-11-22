@@ -77,10 +77,20 @@
     <string name="unavailable_title">Not available yet</string>
     <string name="unavailable_body">%1$s is planned but has not been built yet.</string>
 
+    <string name="planned_in_phase">Planned for Phase %1$d of the implementation plan.</string>
+    <string name="workspace_models">Models</string>
+    <string name="workspace_knowledge">Knowledge</string>
+    <string name="workspace_prompts">Prompts</string>
+    <string name="workspace_tools">Tools</string>
+    <string name="workspace_skills">Skills</string>
+    <string name="workspace_functions">Functions</string>
+
     <!-- Settings tabs -->
     <string name="settings_tab_general">General</string>
     <string name="settings_tab_interface">Interface</string>
+    <string name="settings_tab_notifications">Notifications</string>
     <string name="settings_tab_connections">Connections</string>
+    <string name="settings_tab_integrations">Integrations</string>
     <string name="settings_tab_audio">Audio</string>
     <string name="settings_tab_personalization">Personalization</string>
     <string name="settings_tab_data">Data</string>

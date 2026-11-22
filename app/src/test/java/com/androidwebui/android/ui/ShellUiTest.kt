@@ -21,20 +21,20 @@ class ShellUiTest {
 
     @Test
     fun newChatScreenShowsComposer() {
-        compose.setContent { AppTheme(dark = true) { HomeScreen("User", onOpenSettings = {}) } }
+        compose.setContent { AppTheme(dark = true) { HomeScreen("User", onOpenSettings = {}, onOpenDestination = {}) } }
         compose.onNodeWithText("How can I help you today?").assertIsDisplayed()
     }
 
     @Test
     fun typedDraftIsShown() {
-        compose.setContent { AppTheme(dark = false) { HomeScreen("User", onOpenSettings = {}) } }
+        compose.setContent { AppTheme(dark = false) { HomeScreen("User", onOpenSettings = {}, onOpenDestination = {}) } }
         compose.onNode(hasSetTextAction()).performTextInput("hello")
         compose.onNodeWithText("hello").assertIsDisplayed()
     }
 
     @Test
     fun sendWithoutModelExplainsInsteadOfSilentlyDoingNothing() {
-        compose.setContent { AppTheme(dark = true) { HomeScreen("User", onOpenSettings = {}) } }
+        compose.setContent { AppTheme(dark = true) { HomeScreen("User", onOpenSettings = {}, onOpenDestination = {}) } }
         compose.onNodeWithContentDescription("Send").performClick()
         compose.onNodeWithText("Not available yet").assertIsDisplayed()
     }

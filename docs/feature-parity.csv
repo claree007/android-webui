@@ -7,11 +7,11 @@ F005,Foundation,Docker build + CI,n/a,include,1,done,,scripts/dev
 F006,Shell,Empty / new-chat screen with suggestions,chat/Placeholder.svelte Suggestions.svelte,include,3,"partial: shell, no suggestions",,Screens 01
 F007,Shell,Sidebar: new chat / search / notes / workspace / folders / chats by date,layout/Sidebar.svelte,adapt,3,"partial: drawer lists models, folders and chats by date from SidebarState; title search sheet; real data in Phase 4/6",D10,Native drawer
 F008,Shell,Sidebar Models list (pinned models),Sidebar/PinnedModelList.svelte,include,3,not started,D10,
-F009,Shell,User menu (Settings / Playground / Workspace / Notes / Memories),Sidebar/UserMenu.svelte,adapt,3,"partial: Workspace/Playground/Notes/Memories show ""not available yet""",D10,Sign Out / status / Admin Panel / Channels removed
+F009,Shell,User menu (Settings / Playground / Workspace / Notes / Memories),Sidebar/UserMenu.svelte,adapt,3,"partial: Workspace/Playground/Notes/Memories open screens that state the phase they are built in",D10,Sign Out / status / Admin Panel / Channels removed
 F010,Shell,Model selector sheet,chat/ModelSelector,include,3,"partial: search, filter, selection, set-default and loading/error/empty built against ModelListState; real model list in Phase 4",D19,Screens 32
 F011,Shell,Chat navbar menu (share / download / rename / archive / delete / controls),layout/Navbar/Menu.svelte,adapt,3,"partial: navbar with title and menu built; actions show unavailable until Phase 6",,Share = Android share sheet; no public share links
 F012,Shell,Chat controls panel (system prompt + advanced params),chat/Controls Settings/Advanced,include,4,not started,,Screens 31
-F013,Shell,Settings full-height sheet with tabs,chat/SettingsModal.svelte,adapt,3,partial: General tab only,D15,
+F013,Shell,Settings full-height sheet with tabs,chat/SettingsModal.svelte,adapt,3,"partial: Back chip, all tabs reachable (General built, others state their phase)",D15,
 F014,Shell,Loading / error / empty / unsupported states,n/a,include,3,partial,,
 F015,Connections,OpenAI-compatible connection (url / key / prefix / tags / model allow-list / enable),admin/Settings/Connections/OpenAIConnection.svelte,include,4,not started,D16,config key openai.*
 F016,Connections,Ollama connection,admin/Settings/Connections/OllamaConnection.svelte,include,4,not started,D16,config key ollama.*

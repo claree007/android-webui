@@ -34,13 +34,15 @@ import com.androidwebui.android.R
 import com.androidwebui.android.core.prefs.DevicePrefs
 import com.androidwebui.android.core.prefs.ThemeMode
 
-private enum class SettingsTab(@StringRes val labelRes: Int) {
+private enum class SettingsTab(@StringRes val labelRes: Int, val phase: Int = 0) {
     General(R.string.settings_tab_general),
-    Interface(R.string.settings_tab_interface),
-    Connections(R.string.settings_tab_connections),
-    Audio(R.string.settings_tab_audio),
-    Personalization(R.string.settings_tab_personalization),
-    Data(R.string.settings_tab_data),
+    Interface(R.string.settings_tab_interface, phase = 6),
+    Notifications(R.string.settings_tab_notifications, phase = 5),
+    Connections(R.string.settings_tab_connections, phase = 4),
+    Integrations(R.string.settings_tab_integrations, phase = 7),
+    Audio(R.string.settings_tab_audio, phase = 9),
+    Personalization(R.string.settings_tab_personalization, phase = 12),
+    Data(R.string.settings_tab_data, phase = 12),
 }
 
 /** Full-height settings with a Back chip and horizontally scrolling tabs (D15). Only General is built so far. */
@@ -76,6 +78,11 @@ fun SettingsScreen(prefs: DevicePrefs, onBack: () -> Unit) {
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 12.dp),
+                )
+                Text(
+                    stringResource(R.string.planned_in_phase, tab.phase),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }

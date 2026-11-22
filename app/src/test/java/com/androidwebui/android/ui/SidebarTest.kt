@@ -70,7 +70,7 @@ class SidebarTest {
     @get:Rule val compose = createComposeRule()
 
     private fun open(state: SidebarState) {
-        compose.setContent { AppTheme(true) { HomeScreen("User", onOpenSettings = {}, sidebar = state, today = today) } }
+        compose.setContent { AppTheme(true) { HomeScreen("User", onOpenSettings = {}, onOpenDestination = {}, sidebar = state, today = today) } }
         compose.onNodeWithContentDescription("Open sidebar").performClick()
     }
 

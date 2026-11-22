@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Android WebUI</string>
+    <string name="back">Back</string>
+    <string name="home_profile">Profile: %1$s</string>
+    <string name="home_profile_loading">loading…</string>
+    <string name="home_chat_pending">Chat is not available yet.</string>
+    <string name="settings_title">Settings</string>
+    <string name="theme_title">Theme</string>
+    <string name="theme_system">Follow system</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+</resources>
